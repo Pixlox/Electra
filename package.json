@@ -1,0 +1,21 @@
+{
+  "name": "electra",
+  "version": "1.0.0",
+  "description": "JS rewrite of Electra C# edition, made using discord.JS.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "github.com/Pixlox/Electra"
+  },
+  "author": "Pixlox",
+  "license": "MIT",
+  "dependencies": {
+    "discord.js": "^14.11.0"
+  },
+  "devDependencies": {
+    "eslint": "^8.40.0"
+  }
+}
