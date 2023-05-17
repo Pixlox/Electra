@@ -41,14 +41,3 @@ for (const file of eventFiles) {
 
 
 client.login(token);
-
-client.on('ready', () => {
-	client.user.setStatus('available');
-	client.user.setPresence({
-		game: {
-			name: 'with depression',
-			type: 'STREAMING',
-			url: 'https://www.twitch.tv/monstercat',
-		},
-	});
-});
