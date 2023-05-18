@@ -2,7 +2,7 @@ const colours = require('colors');
 colours.enable();
 
 const { REST, Routes } = require('discord.js');
-const { token, clientId } = require('./config.json');
+const { token, clientId, testing_mode, testingGuildId } = require('./config.json');
 const fs = require('node:fs');
 const path = require('node:path');
 
@@ -29,12 +29,21 @@ const rest = new REST({ version: '10' }).setToken(token);
 (async () => {
 	try {
 		console.log(colours.green('[Electra] ') + `Started refreshing ${commands.length} application (/) commands.`);
-		const data = await rest.put(
-			Routes.applicationCommands(clientId),
-			{ body: commands },
-		);
 
-		console.log(colours.green('[Electra] ') + `Successfully reloaded ${data.length} application (/) commands.`);
+		if (testing_mode == true) {
+			const data = await rest.put(
+				Routes.applicationGuildCommands(clientId, testingGuildId),
+				{ body: commands },
+			);
+			console.log(colours.green('[Electra] ') + `Successfully reloaded ${data.length} application (/) commands.`);
+		} else {
+			const data = await rest.put(
+				Routes.applicationCommands(clientId),
+				{ body: commands },
+			);
+			console.log(colours.green('[Electra] ') + `Successfully reloaded ${data.length} application (/) commands.`);
+		}
+				
 	} catch (error) {
 		console.error(error);
 	}
