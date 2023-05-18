@@ -13,9 +13,10 @@ module.exports = {
 
 
 	async execute(interaction) {
+        global.instanceCommandCount = global.instanceCommandCount + 1;
         try {
             const mentionUserEmbed = new EmbedBuilder()
-            .setColor(0x2C2C2C)
+            .setColor(0x3FA659)
             .setTitle(`${interaction.options.getUser('user').username}'s Avatar`)
             .setImage(interaction.options.getUser('user').displayAvatarURL({ dynamic: true, size: 4096 }))
             .setTimestamp()
@@ -24,7 +25,7 @@ module.exports = {
             interaction.reply({ embeds: [mentionUserEmbed] });
         } catch {
             const currentUserEmbed = new EmbedBuilder()
-			.setColor(0x2C2C2C)
+			.setColor(0x3FA659)
 			.setTitle(`${interaction.user.username}'s Avatar`)
             .setImage(interaction.user.displayAvatarURL({ dynamic: true, size: 4096 }))
 			.setTimestamp()

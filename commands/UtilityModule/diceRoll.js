@@ -5,9 +5,10 @@ module.exports = {
 		.setName('dice')
 		.setDescription('Rolls a die, and returns the answer.'),
 	async execute(interaction) {
+        global.instanceCommandCount = global.instanceCommandCount + 1;
 		const diceRoll = rollDice();
 		const diceRollEmbed = new EmbedBuilder()
-			.setColor(0x2C2C2C)
+			.setColor(0x3FA659)
 			.setTitle('Your dice roll')
 			.setDescription(`You rolled... ${diceRoll}!`)
 			.setTimestamp()
