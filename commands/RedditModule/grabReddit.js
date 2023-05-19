@@ -32,6 +32,7 @@ async function getRandomPost(subreddit, getImage) {
             if (isNSFW) {
                 console.log(colours.red('[Electra] [NSFW WARN] ') + 'Skipped NSFW Content.');
             } else if (NSFWCount < 5) {
+                NSFWCount == NSFWCount + 1;
                 return getRandomPost(subreddit, getImage);
             } else if (NSFWCount >= 5) {
                 NSFWCount == 0;
