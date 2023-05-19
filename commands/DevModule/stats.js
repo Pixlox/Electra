@@ -1,5 +1,7 @@
 const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
 const osu = require('node-os-utils');
+const appRoot = require('app-root-path');
+
 
 const cpu = osu.cpu;
 const formatMemoryUsage = (data) => `${Math.round(data / 1024 / 1024 * 100) / 100} MB`;
@@ -25,7 +27,7 @@ module.exports = {
 			.setColor(0x3FA659)
 			.setTitle('Instance Statistics')
             .addFields(
-                { name: 'Version', value: `Alpha ${require(global.appRoot + '/package.json').version}` },
+                { name: 'Version', value: `Alpha ${require(appRoot + '/package.json').version}` },
                 { name: 'Author', value: 'Pixlox#1717' },
                 { name: 'Library', value: 'DiscordJS' },
                 { name: 'Server', value: `${interaction.guild.name}` },

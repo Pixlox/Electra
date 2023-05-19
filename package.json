@@ -13,9 +13,11 @@
   "author": "Pixlox",
   "license": "MIT",
   "dependencies": {
+    "app-root-path": "^3.1.0",
     "colors": "^1.4.0",
     "discord.js": "^14.11.0",
-    "node-os-utils": "^1.3.7"
+    "node-os-utils": "^1.3.7",
+    "snoowrap": "^1.23.0"
   },
   "devDependencies": {
     "eslint": "^8.40.0"
