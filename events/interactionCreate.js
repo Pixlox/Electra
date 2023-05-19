@@ -23,7 +23,6 @@ module.exports = {
 		
 			if (now < expirationTime) {
 				const expiredTimestamp = Math.round(expirationTime / 1000);
-				// return interaction.reply({ content: `Please wait, you are on a cooldown for \`${command.data.name}\`. You can use it again <t:${expiredTimestamp}:R>.`, ephemeral: true });
 				const cooldownEmbed = new EmbedBuilder()
 					.setColor(0x3FA659)
 					.setTitle('On cooldown!')

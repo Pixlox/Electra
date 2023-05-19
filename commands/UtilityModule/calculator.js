@@ -25,7 +25,7 @@ module.exports = {
                 .setTimestamp()
                 .setFooter({ text: `Sent by ${interaction.user.username}`, iconURL: interaction.user.displayAvatarURL() });
 
-            interaction.reply({ embeds: [calculateEmbedError] });
+            interaction.reply({ embeds: [calculateEmbedError], ephemeral: true });
         } else {
             const calculateEmbed = new EmbedBuilder()
                 .setColor(0x3FA659)
