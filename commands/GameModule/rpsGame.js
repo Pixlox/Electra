@@ -24,7 +24,7 @@ module.exports = {
 
         if (botChoice == interaction.options.getString('option')) {
             const tieEmbed = new EmbedBuilder()
-                .setColor(0xFFF37C)
+                .setColor(0xffe838)
                 .setTitle('It\'s a tie!')
                 .setDescription('Game results are placed below.')
                 .addFields({ name: 'I rolled', value: botChoice }, { name: 'You rolled', value: userChoice })
