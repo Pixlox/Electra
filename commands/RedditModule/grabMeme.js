@@ -7,7 +7,6 @@ const appRoot = require('app-root-path');
 
 const { redditClientId, redditClientSecret, redditRefreshToken } = require(appRoot + '/config.json');
 const isNSFW = false;
-const NSFWCount = 0;
 
 
 const reddit = new snoowrap({
@@ -17,29 +16,21 @@ const reddit = new snoowrap({
     refreshToken: redditRefreshToken,
 });
 
-async function getRandomPost(subreddit, getImage) {
+async function getRandomPost(subreddit, getImage, retryCount = 0) {
     try {
-
-        const subredditDetails = await reddit.getSubreddit(subreddit);
-
-        if (subredditDetails.over18) {
+        if (retryCount >= 5) {
+            console.log('Cannot find non-NSFW post');
             isNSFW == true;
+            return null;
         }
 
         const randomPost = await reddit.getRandomSubmission(subreddit);
-
-        if (randomPost.over_18) {
-            if (isNSFW) {
-                console.log(colours.red('[Electra] [NSFW WARN] ') + 'Skipped NSFW Content.');
-            } else if (NSFWCount < 5) {
-                NSFWCount == NSFWCount + 1;
-                return getRandomPost(subreddit, getImage);
-            } else if (NSFWCount >= 5) {
-                NSFWCount == 0;
-                isNSFW == true;
-            }   
-        }
   
+        if (randomPost.over_18) {
+            console.log('Post is NSFW, finding another post...');
+            return getRandomPost(subreddit, getImage, retryCount + 1);
+        }
+
         if (getImage && randomPost.is_reddit_media_domain) {
             return {
                 title: randomPost.title,
@@ -58,7 +49,7 @@ async function getRandomPost(subreddit, getImage) {
             };
         }
   
-        return getRandomPost(subreddit, getImage);
+        return getRandomPost(subreddit, getImage, retryCount);
     } catch (error) {
         console.error('An error occurred:', error);
         return null;
@@ -99,18 +90,6 @@ module.exports = {
                 .setColor(0x3FA659)
                 .setTitle(result.title)
                 .setImage(result.url)
-                .addFields({ name: 'Upvotes', value: `${result.upvotes}`, inline: true }, { name: 'Author', value: `u/${result.author}`, inline: true })
-                .setTimestamp()
-                .setFooter({ text: `Sent by ${interaction.user.username}`, iconURL: interaction.user.displayAvatarURL() });
-
-                interaction.editReply({ embeds: [redditEmbed] });
-
-            } else if (result) {
-
-                const redditEmbed = new EmbedBuilder()
-                .setColor(0x3FA659)
-                .setTitle(result.title)
-                .setDescription(result.body)
                 .addFields({ name: 'Upvotes', value: `${result.upvotes}`, inline: true }, { name: 'Author', value: `u/${result.author}`, inline: true })
                 .setTimestamp()
                 .setFooter({ text: `Sent by ${interaction.user.username}`, iconURL: interaction.user.displayAvatarURL() });
