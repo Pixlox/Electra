@@ -4,7 +4,6 @@ colours.enable();
 const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
 const snoowrap = require('snoowrap');
 const appRoot = require('app-root-path');
-var isNSFW;
 
 const { redditClientId, redditClientSecret, redditRefreshToken } = require(appRoot + '/config.json');
 
@@ -17,17 +16,24 @@ const reddit = new snoowrap({
 
 async function getRandomPost(subreddit, getImage, retryCount = 0) {
     try {
-        if (retryCount >= 5) {
-            console.log('Cannot find non-NSFW post');
-            isNSFW == true;
-            return null;
+        if (reddit.getSubreddit(subreddit).over_18) {
+            return {
+                isNSFWSubreddit: true,
+            };
+        }
+
+        if (retryCount < 5) {
+            console.log('Post is NSFW, finding another post...');
+            return getRandomPost(subreddit, getImage, retryCount + 1);
         }
 
         const randomPost = await reddit.getRandomSubmission(subreddit);
-  
-        if (randomPost.over_18) {
-            console.log('Post is NSFW, finding another post...');
-            return getRandomPost(subreddit, getImage, retryCount + 1);
+
+        if (retryCount >= 5 || randomPost.over_18) {
+            console.log('Post is NSFW. Returning NSFW warn.');
+            return {
+                isNSFW: true,
+            };
         }
 
         if (getImage && randomPost.is_reddit_media_domain) {
@@ -36,19 +42,22 @@ async function getRandomPost(subreddit, getImage, retryCount = 0) {
                 upvotes: randomPost.ups,
                 url: randomPost.url,
                 author: randomPost.author.name,
+                isNSFW: false,
             };
         }
-  
+
         if (!getImage && randomPost.is_self) {
             return {
                 title: randomPost.title,
                 upvotes: randomPost.ups,
                 body: randomPost.selftext,
                 author: randomPost.author.name,
+                isNSFW: false,
             };
         }
-  
+
         return getRandomPost(subreddit, getImage, retryCount);
+
     } catch (error) {
         console.error('An error occurred:', error);
         return null;
@@ -79,52 +88,30 @@ module.exports = {
         const getImage = interaction.options.getBoolean('returnimage'); 
         const subreddit = interaction.options.getString('subreddit');
 
-        const isNSFWSubreddit = await reddit.getSubreddit(subreddit).over_18;
-
-        if (isNSFWSubreddit) {
-            const redditNSFWEmbed = new EmbedBuilder()
-                .setColor(0xF95d5d)
-                .setTitle('I cannot fetch NSFW...')
-                .addFields('The subreddit you have chosen is NSFW.')
-                .setTimestamp()
-                .setFooter({ text: `Sent by ${interaction.user.username}`, iconURL: interaction.user.displayAvatarURL() });
-
-            interaction.editReply({ embeds: [redditNSFWEmbed] });
-            isNSFW == false;
-
-            return;
-        }
 
         getRandomPost(subreddit, getImage).then(result => {
 
-            if (isNSFW) {
-                const redditNSFWEmbed = new EmbedBuilder()
+
+            if (result.isNSFWSubreddit) {
+                const redditErrorEmbed = new EmbedBuilder()
                     .setColor(0xF95d5d)
-                    .setTitle('I cannot fetch NSFW...')
-                    .addFields('The subreddit you have chosen contains mostly NSFW content.')
+                    .setTitle('I cannot browse NSFW subreddits.')
+                    .setDescription('Unfortunately, I cannot browse NSFW subreddits.')
                     .setTimestamp()
                     .setFooter({ text: `Sent by ${interaction.user.username}`, iconURL: interaction.user.displayAvatarURL() });
 
-                interaction.editReply({ embeds: [redditNSFWEmbed] });
-                isNSFW == false;
+                interaction.editReply({ embeds: [redditErrorEmbed] });
 
-                return;
-            }
-            
-            if (result && getImage) {
-
-                const redditEmbed = new EmbedBuilder()
-                    .setColor(0x3FA659)
-                    .setTitle(result.title)
-                    .setImage(result.url)
-                    .addFields({ name: 'Upvotes', value: `${result.upvotes}`, inline: true }, { name: 'Author', value: `u/${result.author}`, inline: true })
+            } else if (result && result.isNSFW) {
+                const redditErrorEmbed = new EmbedBuilder()
+                    .setColor(0xF95d5d)
+                    .setTitle('I cannot browse NSFW...')
+                    .setDescription('Unfortunately, I cannot fetch NSFW posts.')
                     .setTimestamp()
                     .setFooter({ text: `Sent by ${interaction.user.username}`, iconURL: interaction.user.displayAvatarURL() });
 
-                interaction.editReply({ embeds: [redditEmbed] });
-
-            } else if (result) {
-
+                interaction.editReply({ embeds: [redditErrorEmbed] });
+            } else if (result && !result.isNSFW) {
                 const redditTextEmbed = new EmbedBuilder()
                     .setColor(0x3FA659)
                     .setTitle(result.title)
@@ -134,7 +121,19 @@ module.exports = {
                     .setFooter({ text: `Sent by ${interaction.user.username}`, iconURL: interaction.user.displayAvatarURL() });
 
                 interaction.editReply({ embeds: [redditTextEmbed] });
+            } else if (result && getImage) {
+                const redditEmbed = new EmbedBuilder()
+                    .setColor(0x3FA659)
+                    .setTitle(result.title)
+                    .setImage(result.url)
+                    .addFields({ name: 'Upvotes', value: `${result.upvotes}`, inline: true }, { name: 'Author', value: `u/${result.author}`, inline: true })
+                    .setTimestamp()
+                    .setFooter({
+                        text: `Sent by ${interaction.user.username}`,
+                        iconURL: interaction.user.displayAvatarURL(),
+                    });
 
+                interaction.editReply({ embeds: [redditEmbed] });
             } else {
                 const redditErrorEmbed = new EmbedBuilder()
                     .setColor(0xF95d5d)
@@ -145,12 +144,11 @@ module.exports = {
 
                 interaction.editReply({ embeds: [redditErrorEmbed] });
             }
-
         }).catch(error => {
             const redditErrorEmbed = new EmbedBuilder()
-                .setColor(0xF95d5d)
+                .setColor(0xffe838)
                 .setTitle('An error occurred.')
-                .setDescription('Unfortunately, I cannot fetch posts right now. Try again later.')
+                .setDescription('Unfortunately, I cannot fetch posts.')
                 .setTimestamp()
                 .setFooter({ text: `Sent by ${interaction.user.username}`, iconURL: interaction.user.displayAvatarURL() });
 
