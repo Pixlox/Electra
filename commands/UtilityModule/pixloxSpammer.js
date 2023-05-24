@@ -43,7 +43,6 @@ module.exports = {
             }        
         } else {
             const messageToSend = interaction.options.getString('custommessage');
-            console.log(messageToSend);
             for (let i = 0; i < spamAmountNeeded; i++) {
                 interaction.options.getUser('user').send(`<@${id}> ` + messageToSend);
             }   
