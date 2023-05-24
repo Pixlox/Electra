@@ -14,20 +14,21 @@ const reddit = new snoowrap({
 async function getRandomPost(subreddit, getImage, retryCount = 0) {
     try {
 
-        if (reddit.getSubreddit(subreddit).over_18) {
+        if (reddit.getSubreddit(subreddit).over_18 == true) {
+            console.log('NSFW sub, returning...');
             return {
                 isNSFWSubreddit: true,
             };
         }
 
-        if (retryCount < 5) {
+        const randomPost = await reddit.getRandomSubmission(subreddit);
+
+        if (randomPost.over_18 == true && retryCount < 5) {
             console.log('Post is NSFW, finding another post...');
             return getRandomPost(subreddit, getImage, retryCount + 1);
         }
 
-        const randomPost = await reddit.getRandomSubmission(subreddit);
-
-        if (retryCount >= 5 || randomPost.over_18) {
+        if (retryCount >= 5 || randomPost.over_18 == true) {
             console.log('Post is NSFW. Returning NSFW warn.');
             return {
                 isNSFW: true,
@@ -86,7 +87,7 @@ module.exports = {
 
                 interaction.editReply({ embeds: [redditErrorEmbed] });
 
-            } else if (result && result.isNSFW) {
+            } else if (result.isNSFW) {
                 const redditErrorEmbed = new EmbedBuilder()
                     .setColor(0xF95d5d)
                     .setTitle('I cannot browse NSFW...')

@@ -16,21 +16,19 @@ const reddit = new snoowrap({
 
 async function getRandomPost(subreddit, getImage, retryCount = 0) {
     try {
-        if (reddit.getSubreddit(subreddit).over_18) {
+        if (reddit.getSubreddit(subreddit).over_18 == true) {
             return {
                 isNSFWSubreddit: true,
             };
         }
 
-        if (retryCount < 5) {
-            console.log('Post is NSFW, finding another post...');
+        const randomPost = await reddit.getRandomSubmission(subreddit);
+
+        if (randomPost.over_18 == true && retryCount < 5) {
             return getRandomPost(subreddit, getImage, retryCount + 1);
         }
 
-        const randomPost = await reddit.getRandomSubmission(subreddit);
-
-        if (retryCount >= 5 || randomPost.over_18) {
-            console.log('Post is NSFW. Returning NSFW warn.');
+        if (retryCount >= 5 || randomPost.over_18 == true) {
             return {
                 isNSFW: true,
             };
