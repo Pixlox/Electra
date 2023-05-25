@@ -13,11 +13,12 @@ cat << "EOF"
 EOF
 
 while true; do
-  echo "Welcome to Electra. Please choose an option below:"
+  echo "\n\nWelcome to Electra. Please choose an option below:"
   echo "1) Start bot"
   echo "2) Deploy commands"
-  echo "3) Help"
-  read choice
+  echo "3) Lavalink cleanup"
+  echo "4) Help"
+  read -r choice
 
   if [ "$choice" = "1" ]; then
     echo "Starting Lavalink..."
@@ -48,13 +49,13 @@ while true; do
       if [ "$command" = "quit" ]; then
         echo "Stopping the bot..."
 
-        node_processes=$(pgrep -f node)
+        node_processes=$(pgrep -f "node index.js")
         if [ -n "$node_processes" ]; then
-          echo "Killing all Node.js processes..."
-          kill $node_processes
-          echo "All Node.js processes killed."
+          echo "Killing Node.js process..."
+          kill "$node_processes"
+          echo "Node.js process killed."
         else
-          echo "No Node.js processes found."
+          echo "No Node.js process found."
         fi
 
         break
@@ -79,7 +80,7 @@ while true; do
 
     echo "Commands deployed successfully."
     echo "Would you like to start the bot? (Y/N)"
-    read start_choice
+    read -r start_choice
 
     if [ "$start_choice" = "Y" ] || [ "$start_choice" = "y" ]; then
       continue
@@ -88,22 +89,24 @@ while true; do
     fi
 
   elif [ "$choice" = "3" ]; then
-    echo "\nElectra is a multi-purpose utility discord bot. Some of Electra's functions require external dependencies, some of which must be installed by the user."
-    echo "Lavalink is required for Electra's music commands to function, and Lavalink depends on Java. Lavalink is included with Electra. However, Java must be installed separately."
-    echo "Electra and Lavalink play best with Java v13. For more information, head to the Setup section on Electra's GitHub page."
-    echo "\nElectra's GitHub repository is found at: https://github.com/Pixlox/Electra\n"
+    echo "Performing Lavalink cleanup..."
+    java_processes=$(pgrep -f "java -Xmx1024M -Xms1024M -jar Lavalink.jar")
+    if [ -n "$java_processes" ]; then
+      echo "Killing all Java processes..."
+      kill "$java_processes"
+      echo "All Java processes killed."
+    else
+      echo "No Java processes found."
+    fi
+
+  elif [ "$choice" = "4" ]; then
+    echo -e "\nElectra is a multi-purpose utility discord bot. Some of Electra's functions require external dependencies, some of which must be installed by the user."
+    echo "Lavalink is required for Electra's music commands to function, and Lavalink depends on Java. Lavalink and Java are NOT included with Electra and must be installed separately."
+    echo "Electra and Lavalink work best with Java v13. For more information, head to the Setup section on Electra's GitHub page."
+    echo -e "\nElectra's GitHub repository is found at: https://github.com/Pixlox/Electra\n"
 
   else
     echo "That is an invalid choice."
 
   fi
 done
-
-java_processes=$(pgrep -f java)
-if [ -n "$java_processes" ]; then
-  echo "Killing all Java processes..."
-  kill $java_processes
-  echo "All Java processes killed."
-else
-  echo "No Java processes found."
-fi

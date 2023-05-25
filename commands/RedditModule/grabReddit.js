@@ -5,17 +5,13 @@ const { SlashCommandBuilder, EmbedBuilder } = require("discord.js");
 const snoowrap = require("snoowrap");
 const appRoot = require("app-root-path");
 
-const {
-  redditClientId,
-  redditClientSecret,
-  redditRefreshToken,
-} = require(appRoot + "/config.json");
+const config = require(appRoot + "/config.json");
 
 const reddit = new snoowrap({
   userAgent: "electra discord bot",
-  clientId: redditClientId,
-  clientSecret: redditClientSecret,
-  refreshToken: redditRefreshToken,
+  clientId: config.reddit[0].clientId,
+  clientSecret: config.reddit[0].clientSecret,
+  refreshToken: config.reddit[0].refreshToken,
 });
 
 async function getRandomPost(subreddit, getImage, retryCount = 0) {

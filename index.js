@@ -6,7 +6,7 @@ global.instanceCommandCount = 0;
 const fs = require("node:fs");
 const path = require("node:path");
 const { Client, Collection, GatewayIntentBits } = require("discord.js");
-const { token } = require("./config.json");
+const config = require("./config.json");
 
 const client = new Client({ intents: [GatewayIntentBits.Guilds] });
 
@@ -50,4 +50,4 @@ for (const file of eventFiles) {
   }
 }
 
-client.login(token);
+client.login(config.discord[0].token);

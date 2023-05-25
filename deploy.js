@@ -2,12 +2,7 @@ const colours = require("colors");
 colours.enable();
 
 const { REST, Routes } = require("discord.js");
-const {
-  token,
-  clientId,
-  testing_mode,
-  testingGuildId,
-} = require("./config.json");
+const config = require("./config.json");
 const fs = require("node:fs");
 const path = require("node:path");
 
@@ -34,7 +29,7 @@ for (const folder of commandFolders) {
   }
 }
 
-const rest = new REST({ version: "10" }).setToken(token);
+const rest = new REST({ version: "10" }).setToken(config.discord[0].token);
 
 (async () => {
   try {
@@ -43,9 +38,12 @@ const rest = new REST({ version: "10" }).setToken(token);
         `Started refreshing ${commands.length} application (/) commands.`
     );
 
-    if (testing_mode == true) {
+    if (config.discord[0].testing_mode == true) {
       const data = await rest.put(
-        Routes.applicationGuildCommands(clientId, testingGuildId),
+        Routes.applicationGuildCommands(
+          config.discord[0].clientId,
+          config.discord[0].testingGuildId
+        ),
         { body: commands }
       );
       console.log(
@@ -53,9 +51,12 @@ const rest = new REST({ version: "10" }).setToken(token);
           `Successfully reloaded ${data.length} application (/) commands.`
       );
     } else {
-      const data = await rest.put(Routes.applicationCommands(clientId), {
-        body: commands,
-      });
+      const data = await rest.put(
+        Routes.applicationCommands(config.discord[0].clientId),
+        {
+          body: commands,
+        }
+      );
       console.log(
         colours.green("[Electra] ") +
           `Successfully reloaded ${data.length} application (/) commands.`
