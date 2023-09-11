@@ -28,7 +28,7 @@ module.exports = {
           iconURL: interaction.user.displayAvatarURL(),
         });
 
-      interaction.reply({ embeds: [mentionUserEmbed] });
+      interaction.editReply({ embeds: [mentionUserEmbed] });
     } catch {
       const currentUserEmbed = new EmbedBuilder()
         .setColor(0x3fa659)
@@ -42,7 +42,7 @@ module.exports = {
           iconURL: interaction.user.displayAvatarURL(),
         });
 
-      interaction.reply({ embeds: [currentUserEmbed] });
+      interaction.editReply({ embeds: [currentUserEmbed] });
     }
   },
 };

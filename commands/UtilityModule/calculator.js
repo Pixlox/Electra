@@ -30,7 +30,7 @@ module.exports = {
           iconURL: interaction.user.displayAvatarURL(),
         });
 
-      interaction.reply({ embeds: [calculateEmbedError], ephemeral: true });
+      interaction.editReply({ embeds: [calculateEmbedError], ephemeral: true });
     } else {
       const calculateEmbed = new EmbedBuilder()
         .setColor(0x3fa659)
@@ -42,7 +42,7 @@ module.exports = {
           iconURL: interaction.user.displayAvatarURL(),
         });
 
-      interaction.reply({ embeds: [calculateEmbed] });
+      interaction.editReply({ embeds: [calculateEmbed] });
     }
   },
 };

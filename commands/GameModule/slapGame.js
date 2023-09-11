@@ -29,7 +29,7 @@ module.exports = {
           iconURL: interaction.user.displayAvatarURL(),
         });
 
-      interaction.reply({ embeds: [slapHitEmbed] });
+      interaction.editReply({ embeds: [slapHitEmbed] });
 
       const slapHitDMEmbed = new EmbedBuilder()
         .setColor(0xf95d5d)
@@ -54,7 +54,7 @@ module.exports = {
           iconURL: interaction.user.displayAvatarURL(),
         });
 
-      interaction.reply({ embeds: [slapMissEmbed] });
+      interaction.editReply({ embeds: [slapMissEmbed] });
     }
   },
 };

@@ -37,7 +37,7 @@ module.exports = {
           iconURL: interaction.user.displayAvatarURL(),
         });
 
-      interaction.reply({ embeds: [tieEmbed] });
+      interaction.editReply({ embeds: [tieEmbed] });
       return;
     }
 
@@ -60,7 +60,7 @@ module.exports = {
           iconURL: interaction.user.displayAvatarURL(),
         });
 
-      interaction.reply({ embeds: [userWinEmbed] });
+      interaction.editReply({ embeds: [userWinEmbed] });
       return;
     }
 
@@ -83,7 +83,7 @@ module.exports = {
           iconURL: interaction.user.displayAvatarURL(),
         });
 
-      interaction.reply({ embeds: [userLoseEmbed] });
+      interaction.editReply({ embeds: [userLoseEmbed] });
       return;
     }
   },

@@ -6,7 +6,7 @@ module.exports = {
     .setDescription("Provides information about the server."),
   async execute(interaction) {
     global.instanceCommandCount = global.instanceCommandCount + 1;
-    await interaction.reply(
+    await interaction.editReply(
       `This server is ${interaction.guild.name} and has ${interaction.guild.memberCount} members.`
     );
   },

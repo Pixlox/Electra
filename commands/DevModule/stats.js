@@ -29,7 +29,7 @@ module.exports = {
             name: "Version",
             value: `Alpha ${require(appRoot + "/package.json").version}`,
           },
-          { name: "Author", value: "Pixlox#1717" },
+          { name: "Author", value: "Pixlox" },
           { name: "Library", value: "DiscordJS" },
           { name: "Server", value: `${interaction.guild.name}` },
           { name: "Instance Memory usage", value: memoryUsage.rss },
@@ -45,7 +45,7 @@ module.exports = {
           iconURL: interaction.user.displayAvatarURL(),
         });
 
-      interaction.reply({ embeds: [statsEmbed] });
+      interaction.editReply({ embeds: [statsEmbed] });
     });
   },
 };

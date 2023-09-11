@@ -34,7 +34,7 @@ async function getRandomPost(subreddit, getImage, retryCount = 0) {
       };
     }
 
-    if (getImage && randomPost.is_reddit_media_domain) {
+    if (getImage && randomPost.is_reddit_media_domain && !randomPost.is_video) {
       return {
         title: randomPost.title,
         upvotes: randomPost.ups,
@@ -51,6 +51,12 @@ async function getRandomPost(subreddit, getImage, retryCount = 0) {
         body: randomPost.selftext,
         author: randomPost.author.name,
         isNSFW: false,
+      };
+    }
+
+    if (randomPost.is_video) {
+      return {
+        isVideo: true,
       };
     }
 
@@ -82,14 +88,24 @@ module.exports = {
   async execute(interaction) {
     global.instanceCommandCount = global.instanceCommandCount + 1;
 
-    await interaction.deferReply();
-
     const getImage = interaction.options.getBoolean("returnimage");
     const subreddit = interaction.options.getString("subreddit");
 
     getRandomPost(subreddit, getImage)
       .then((result) => {
-        if (result.isNSFWSubreddit) {
+        if (result.isVideo) {
+          const redditErrorEmbed = new EmbedBuilder()
+            .setColor(0xf95d5d)
+            .setTitle("I cannot browse videos.")
+            .setDescription("Unfortunately, I cannot browse videos.")
+            .setTimestamp()
+            .setFooter({
+              text: `Sent by ${interaction.user.username}`,
+              iconURL: interaction.user.displayAvatarURL(),
+            });
+
+          interaction.editReply({ embeds: [redditErrorEmbed] });
+        } else if (result.isNSFWSubreddit) {
           const redditErrorEmbed = new EmbedBuilder()
             .setColor(0xf95d5d)
             .setTitle("I cannot browse NSFW subreddits.")

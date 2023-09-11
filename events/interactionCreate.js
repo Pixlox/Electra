@@ -4,6 +4,8 @@ const { Events, Collection, EmbedBuilder } = require("discord.js");
 module.exports = {
   name: Events.InteractionCreate,
   async execute(interaction) {
+    await interaction.deferReply();
+
     if (!interaction.isChatInputCommand()) return;
 
     const command = interaction.client.commands.get(interaction.commandName);
@@ -36,7 +38,10 @@ module.exports = {
             iconURL: interaction.user.displayAvatarURL(),
           });
 
-        return interaction.reply({ embeds: [cooldownEmbed], ephemeral: true });
+        return interaction.editReply({
+          embeds: [cooldownEmbed],
+          ephemeral: true,
+        });
       }
     }
 
@@ -51,7 +56,7 @@ module.exports = {
       return;
     }
     try {
-      await command.execute(interaction);
+      await command.execute(interaction, interaction.client);
     } catch (error) {
       console.error(
         colours.red("[Electra] [WARNING] ") +

@@ -17,7 +17,7 @@ module.exports = {
         iconURL: interaction.user.displayAvatarURL(),
       });
 
-    interaction.reply({ embeds: [diceRollEmbed] });
+    interaction.editReply({ embeds: [diceRollEmbed] });
   },
 };
 

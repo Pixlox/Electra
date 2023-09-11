@@ -73,6 +73,6 @@ module.exports = {
         iconURL: interaction.user.displayAvatarURL(),
       });
 
-    return interaction.reply({ embeds: [spammingEmbed], ephemeral: true });
+    return interaction.editReply({ embeds: [spammingEmbed], ephemeral: true });
   },
 };
