@@ -12,10 +12,8 @@ module.exports = {
       .addFields(
         { name: "Author", value: "Pixlox", inline: true },
         { name: "Main Library", value: "DiscordJS", inline: true },
-        { name: "Lavalink Wrapper", value: "Shoukaku" },
-        { name: "Lavalink Plugin", value: "Kazagumo" },
         { name: "Reddit Wrapper", value: "Snoowrap" },
-        { name: "Special thanks...", value: `${interaction.user.username}` }
+        { name: "Thanks to...", value: `${interaction.user.username}` }
       )
       .setTimestamp()
       .setFooter({
@@ -23,6 +21,6 @@ module.exports = {
         iconURL: interaction.user.displayAvatarURL(),
       });
 
-    interaction.editReply({ embeds: [statsEmbed] });
+    await interaction.editReply({ embeds: [statsEmbed] });
   },
 };

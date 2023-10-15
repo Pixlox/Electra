@@ -18,6 +18,23 @@ module.exports = {
     const slapperName = interaction.user.username;
     const slapRecieverName = interaction.options.getUser("user").username;
 
+    if (
+      interaction.user.userId === interaction.options.getUser("user").userId
+    ) {
+      const slapSelfEmbed = new EmbedBuilder()
+        .setColor(0x3fa659)
+        .setTitle("You slapped yourself?")
+        .setDescription("It hurt...")
+        .setTimestamp()
+        .setFooter({
+          text: `Sent by ${interaction.user.username}`,
+          iconURL: interaction.user.displayAvatarURL(),
+        });
+
+      await interaction.editReply({ embeds: [slapSelfEmbed] });
+      return;
+    }
+
     if (slapChance < 1 / 3) {
       const slapHitEmbed = new EmbedBuilder()
         .setColor(0x3fa659)
