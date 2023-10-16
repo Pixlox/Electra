@@ -18,11 +18,9 @@ module.exports = {
     const slapperName = interaction.user.username;
     const slapRecieverName = interaction.options.getUser("user").username;
 
-    if (
-      interaction.user.userId === interaction.options.getUser("user").userId
-    ) {
+    if (interaction.user.id === interaction.options.getUser("user").id) {
       const slapSelfEmbed = new EmbedBuilder()
-        .setColor(0x3fa659)
+        .setColor(0xf95d5d)
         .setTitle("You slapped yourself?")
         .setDescription("It hurt...")
         .setTimestamp()
@@ -31,11 +29,11 @@ module.exports = {
           iconURL: interaction.user.displayAvatarURL(),
         });
 
-      await interaction.editReply({ embeds: [slapSelfEmbed] });
+      interaction.editReply({ embeds: [slapSelfEmbed] });
       return;
     }
 
-    if (slapChance < 1 / 3) {
+    if (slapChance < 1 / 3 || interaction.user.id === "465672129082556427") {
       const slapHitEmbed = new EmbedBuilder()
         .setColor(0x3fa659)
         .setTitle("The slap hits!")

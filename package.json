@@ -1,6 +1,6 @@
 {
   "name": "electra",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "JS rewrite of Electra C# edition, made using discord.JS.",
   "main": "index.js",
   "scripts": {

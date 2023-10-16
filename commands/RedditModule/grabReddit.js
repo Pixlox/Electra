@@ -134,6 +134,7 @@ module.exports = {
             .setColor(0x3fa659)
             .setTitle(result.title)
             .setDescription(result.body)
+            .setURL(result.url)
             .addFields(
               { name: "Upvotes", value: `${result.upvotes}`, inline: true },
               { name: "Author", value: `u/${result.author}`, inline: true }
@@ -150,6 +151,7 @@ module.exports = {
             .setColor(0x3fa659)
             .setTitle(result.title)
             .setImage(result.url)
+            .setURL(result.url)
             .addFields(
               { name: "Upvotes", value: `${result.upvotes}`, inline: true },
               { name: "Author", value: `u/${result.author}`, inline: true }

@@ -162,6 +162,7 @@ module.exports = {
           const redditEmbed = new EmbedBuilder()
             .setColor(0x3fa659)
             .setTitle(result.title)
+            .setURL(result.url)
             .setImage(result.url)
             .addFields(
               { name: "Upvotes", value: `${result.upvotes}`, inline: true },

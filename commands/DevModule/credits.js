@@ -12,7 +12,12 @@ module.exports = {
       .addFields(
         { name: "Author", value: "Pixlox", inline: true },
         { name: "Main Library", value: "DiscordJS", inline: true },
-        { name: "Reddit Wrapper", value: "Snoowrap" },
+        { name: "Reddit Wrapper", value: "Snoowrap", inline: true },
+        {
+          name: "Thanks to...",
+          value: `${interaction.user.username} (you!)`,
+          inline: true,
+        },
         {
           name: "Auscar",
           value:
@@ -31,8 +36,7 @@ module.exports = {
         {
           name: "Omar",
           value: "He loves Silver Wolf, doesn't contribute to Egypt",
-        },
-        { name: "Thanks to...", value: `${interaction.user.username}` }
+        }
       )
       .setTimestamp()
       .setFooter({
