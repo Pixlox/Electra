@@ -12,10 +12,10 @@ module.exports = {
       .addFields(
         { name: "Author", value: "Pixlox", inline: true },
         { name: "Main Library", value: "DiscordJS", inline: true },
-        { name: "Reddit Wrapper", value: "Snoowrap", inline: true },
+        { name: "Reddit Wrapper", value: "Snoowrap" },
         {
           name: "Thanks to...",
-          value: `${interaction.user.username} (you!)`,
+          value: `${interaction.user.username}`,
           inline: true,
         },
         {

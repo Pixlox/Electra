@@ -6,11 +6,6 @@
   <component name="ChangeListManager">
     <list default="true" id="b6bb23c4-306e-4184-ac7d-5389d65d163e" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/commands/DevModule/credits.js" beforeDir="false" afterPath="$PROJECT_DIR$/commands/DevModule/credits.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/commands/GameModule/slapGame.js" beforeDir="false" afterPath="$PROJECT_DIR$/commands/GameModule/slapGame.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/commands/RedditModule/grabMeme.js" beforeDir="false" afterPath="$PROJECT_DIR$/commands/RedditModule/grabMeme.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/commands/RedditModule/grabReddit.js" beforeDir="false" afterPath="$PROJECT_DIR$/commands/RedditModule/grabReddit.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/run.sh" beforeDir="false" afterPath="$PROJECT_DIR$/run.sh" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -81,7 +76,7 @@
       <workItem from="1694950842522" duration="1798000" />
       <workItem from="1697366084912" duration="1496000" />
       <workItem from="1697427136913" duration="2271000" />
-      <workItem from="1697455250258" duration="3520000" />
+      <workItem from="1697455250258" duration="4529000" />
     </task>
     <servers />
   </component>
