@@ -8,7 +8,9 @@ const path = require("node:path");
 const { Client, Collection, GatewayIntentBits } = require("discord.js");
 const config = require("./config.json");
 
-const client = new Client({ intents: [GatewayIntentBits.Guilds] });
+const client = new Client({
+  intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildVoiceStates],
+});
 
 client.commands = new Collection();
 client.cooldowns = new Collection();
@@ -50,4 +52,5 @@ for (const file of eventFiles) {
   }
 }
 
+global.lavalinkEnabled = config.lavalink[0].enabled;
 client.login(config.discord[0].token);

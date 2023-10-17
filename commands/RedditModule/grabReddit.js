@@ -70,7 +70,7 @@ async function getRandomPost(subreddit, getImage, retryCount = 0) {
 module.exports = {
   data: new SlashCommandBuilder()
     .setName("reddit")
-    .setDescription("Returns a random meme from r/memes.")
+    .setDescription("Returns a random post form your specified subreddit.")
     .addStringOption((option) =>
       option
         .setName("subreddit")
