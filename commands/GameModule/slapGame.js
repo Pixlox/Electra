@@ -1,4 +1,5 @@
 const { SlashCommandBuilder, EmbedBuilder } = require("discord.js");
+const colours = require("colors");
 
 module.exports = {
   data: new SlashCommandBuilder()
@@ -61,18 +62,26 @@ module.exports = {
 
         interaction.editReply({ embeds: [slapHitEmbed] });
 
-        const slapHitDMEmbed = new EmbedBuilder()
-          .setColor(0xf95d5d)
-          .setTitle("You just got slapped...")
-          .setDescription(`You got slapped by ${slapperName}.`)
-          .setTimestamp()
-          .setFooter({
-            text: `Sent by ${interaction.user.username}`,
-            iconURL: interaction.user.displayAvatarURL(),
-          });
+        try {
+          const slapHitDMEmbed = new EmbedBuilder()
+            .setColor(0xf95d5d)
+            .setTitle("You just got slapped...")
+            .setDescription(`You got slapped by ${slapperName}.`)
+            .setTimestamp()
+            .setFooter({
+              text: `Sent by ${interaction.user.username}`,
+              iconURL: interaction.user.displayAvatarURL(),
+            });
 
-        interaction.options.getUser("user").send({ embeds: [slapHitDMEmbed] });
-        return;
+          interaction.options
+            .getUser("user")
+            .send({ embeds: [slapHitDMEmbed] });
+          return;
+        } catch {
+          console.log(
+            colours.green("[Electra] ") + "Bot blocked by user. Cannot send DM."
+          );
+        }
       } else {
         const slapMissEmbed = new EmbedBuilder()
           .setColor(0xf95d5d)

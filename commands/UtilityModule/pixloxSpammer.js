@@ -1,4 +1,5 @@
 const { SlashCommandBuilder, EmbedBuilder } = require("discord.js");
+const colours = require("colors");
 
 module.exports = {
   cooldown: 300,
@@ -47,17 +48,57 @@ module.exports = {
       interaction.options.getString("custommessage") == null ||
       interaction.options.getString("custommessage") == ""
     ) {
-      for (let i = 0; i < spamAmountNeeded; i++) {
-        interaction.options
-          .getUser("user")
-          .send(
-            `<@${id}> ${interaction.user.username} would like to speak with you.`
-          );
+      try {
+        for (let i = 0; i < spamAmountNeeded; i++) {
+          await interaction.options
+            .getUser("user")
+            .send(
+              `<@${id}> ${interaction.user.username} would like to speak with you.`
+            );
+        }
+      } catch {
+        console.log(
+          colours.green("[Electra] ") + "Bot blocked by user. Cannot send DM."
+        );
+        const blockedUserEmbed = new EmbedBuilder()
+          .setColor(0xf95d5d)
+          .setTitle("Cannot send user DM.")
+          .setDescription("The user has blocked me, or has DMs disabled.")
+          .setTimestamp()
+          .setFooter({
+            text: `Sent by ${interaction.user.username}`,
+            iconURL: interaction.user.displayAvatarURL(),
+          });
+
+        return interaction.editReply({
+          embeds: [blockedUserEmbed],
+          ephemeral: true,
+        });
       }
     } else {
       const messageToSend = interaction.options.getString("custommessage");
       for (let i = 0; i < spamAmountNeeded; i++) {
-        interaction.options.getUser("user").send(`<@${id}> ` + messageToSend);
+        try {
+          interaction.options.getUser("user").send(`<@${id}> ` + messageToSend);
+        } catch {
+          console.log(
+            colours.green("[Electra] ") + "Bot blocked by user. Cannot send DM."
+          );
+          const blockedUserEmbed = new EmbedBuilder()
+            .setColor(0xf95d5d)
+            .setTitle("Cannot send user DM.")
+            .setDescription("The user has blocked me, or has DMs disabled.")
+            .setTimestamp()
+            .setFooter({
+              text: `Sent by ${interaction.user.username}`,
+              iconURL: interaction.user.displayAvatarURL(),
+            });
+
+          return interaction.editReply({
+            embeds: [blockedUserEmbed],
+            ephemeral: true,
+          });
+        }
       }
     }
 

@@ -5,12 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b6bb23c4-306e-4184-ac7d-5389d65d163e" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/commands/MusicModule/play.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/commands/RedditModule/grabReddit.js" beforeDir="false" afterPath="$PROJECT_DIR$/commands/RedditModule/grabReddit.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/events/ready.js" beforeDir="false" afterPath="$PROJECT_DIR$/events/ready.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/commands/GameModule/slapGame.js" beforeDir="false" afterPath="$PROJECT_DIR$/commands/GameModule/slapGame.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/commands/UtilityModule/pixloxSpammer.js" beforeDir="false" afterPath="$PROJECT_DIR$/commands/UtilityModule/pixloxSpammer.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -83,7 +79,8 @@
       <workItem from="1697366084912" duration="1496000" />
       <workItem from="1697427136913" duration="2271000" />
       <workItem from="1697455250258" duration="4702000" />
-      <workItem from="1697539431325" duration="4200000" />
+      <workItem from="1697539431325" duration="5158000" />
+      <workItem from="1697758924523" duration="344000" />
     </task>
     <servers />
   </component>
