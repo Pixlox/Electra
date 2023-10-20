@@ -1,10 +1,8 @@
 #!/bin/bash
 
-echo "Killing all Node.js instances..."
-pkill -f "node"
-
 echo "Pulling changes from git..."
-git pull
+git reset --hard
+git pull -f
 
 echo "Attempting to install new dependencies..."
 npm install
