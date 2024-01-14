@@ -8,7 +8,8 @@ const appRoot = require("app-root-path");
 const config = require(appRoot + "/config.json");
 
 const reddit = new snoowrap({
-  userAgent: "electra discord bot",
+  userAgent:
+    "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
   clientId: config.reddit[0].clientId,
   clientSecret: config.reddit[0].clientSecret,
   refreshToken: config.reddit[0].refreshToken,
