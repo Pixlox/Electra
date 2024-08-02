@@ -1,9 +1,0 @@
-<component name="libraryTable">
-  <library name="Lavalink">
-    <CLASSES>
-      <root url="jar://$PROJECT_DIR$/lavalink/Lavalink.jar!/" />
-    </CLASSES>
-    <JAVADOC />
-    <SOURCES />
-  </library>
-</component>
